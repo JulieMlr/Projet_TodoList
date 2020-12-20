@@ -10,9 +10,10 @@ import {
   Button,
   TouchableWithoutFeedbackBase,
 } from "react-native";
-
+import { FontAwesome } from "@expo/vector-icons";
 import DoneScreen from "./DoneScreen";
 import TodoScreen from "./TodoScreen";
+import { Ionicons } from "@expo/vector-icons";
 
 export default class All extends Component {
   constructor(props) {
@@ -21,49 +22,71 @@ export default class All extends Component {
       list: [],
       text: "",
       list_valid: [],
+      description: "",
+      listDescription: [],
     };
   }
 
   ListItem = (index, text) => {
     return (
-      <View style={styles.item}>
-        <Text style={{ fontSize: 15 }}>{text}</Text>
-        <TouchableOpacity onPress={() => this.deleteItem(index)}>
-          <Text style={{ color: "red" }}>X Supprimer </Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => this.ValidItem(index, text)}>
-          <Text style={{ color: "blue" }}>X Valider </Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => this.Detail(chat)}>
-          <Text style={{ color: "blue" }}>X Detail </Text>
-        </TouchableOpacity>
+      <View>
+        <View style={styles.item}>
+          <TouchableOpacity onPress={() => this.ValidItem(index, text)}>
+            <Ionicons name="checkmark-circle-outline" size={18} />
+          </TouchableOpacity>
+          <Text style={{ fontSize: 18 }}>{text}</Text>
+          <TouchableOpacity onPress={() => this.deleteItem(index)}>
+            <FontAwesome name="trash" size={18} />
+          </TouchableOpacity>
+        </View>
+        <View style={styles.desc}>
+          <Text style={styles.descText}> {this.state.listDescription[index]}</Text>
+        </View>
       </View>
     );
   };
+
 
   ListValidItem = (index, text) => {
     return (
       <View style={styles.item}>
-        <Text style={{ fontSize: 15, marginLeft: 20 }}>{text}</Text>
+        <Ionicons name="checkmark-circle" size={18} color="grey" />
+        <Text
+          style={{
+            fontSize: 18,
+            textDecorationLine: "line-through",
+            color: "grey",
+          }}
+        >
+          {text}
+        </Text>
+        <TouchableOpacity onPress={() => this.deleteValidItem(index)}>
+          <FontAwesome name="trash" size={18} color="grey" />
+        </TouchableOpacity>
       </View>
     );
   };
 
-  Detail = (chat) => {
-    const { text, index } = chat;
-    alert("Description");
-  };
-
   deleteItem = (index) => {
     const tmp = [...this.state.list];
+    const tmp_des = [...this.state.listDescription];
     tmp.splice(index, 1);
-    this.setState({ list: tmp });
+    tmp_des.splice(index, 1);
+    this.setState({ list: tmp, listDescription: tmp_des });
+  };
+
+  deleteValidItem = (index) => {
+    const tmp = [...this.state.list_valid];
+    tmp.splice(index, 1);
+    this.setState({ list_valid: tmp });
   };
 
   addItem = () => {
     const tmp = [...this.state.list];
+    const tmp_des = [...this.state.listDescription];
     tmp.push(this.state.text);
-    this.setState({ list: tmp, text: "" });
+    tmp_des.push(this.state.description);
+    this.setState({ list: tmp, text: "", listDescription: tmp_des });
   };
 
   ValidItem = (index, text) => {
@@ -74,10 +97,8 @@ export default class All extends Component {
   };
 
   Done = () => {
-    console.log("Done " + this.state.list.length);
     return (
       <View style={styles.fond}>
-        <Text> Terminé </Text>
         {this.state.list_valid.map((element, index) => {
           return this.ListValidItem(index, element);
         })}
@@ -86,37 +107,36 @@ export default class All extends Component {
   };
 
   Todo = () => {
-    console.log("Todo " + this.state.list.length);
     return (
       <View style={styles.fond}>
-        <Text> En cours </Text>
         {this.state.list.map((element, index) => {
           return this.ListItem(index, element);
         })}
-        {this.Bouton()}
       </View>
     );
   };
 
   Bouton = () => {
     return (
-      <View>
+      <View style={styles.button}>
         <TextInput
           placeholder="Ajouter une tâche"
-          onFocus={() => this.setState({ placeholder: "Ajouter" })}
           style={styles.input}
+          value={this.text}
           onChangeText={(value) => {
             this.setState({ text: value });
           }}
         />
-        <TouchableOpacity
-          style={styles.button}
-          disabled={!this.state.text}
-          onPress={this.addItem}
-        >
-          <Text style={{ color: "#4D4D4D", fontWeight: "bold", fontSize: 15 }}>
-            Ajouter
-          </Text>
+        <TextInput
+          placeholder="Ajouter une description"
+          style={styles.input}
+          value={this.description}
+          onChangeText={(value) => {
+            this.setState({ description: value });
+          }}
+        />
+        <TouchableOpacity onPress={this.addItem}>
+          <Ionicons key="icon" name="add" size={30} color="purple" />
         </TouchableOpacity>
       </View>
     );
@@ -127,8 +147,9 @@ export default class All extends Component {
       <View style={styles.container}>
         <this.Todo key="todo" />
         <this.Done key="done" />
-        <DoneScreen key="doneScreen" list_valid={this.state.list_valid} />
-        <TodoScreen key="todoScreen" list={this.state.list} list_valid={this.state.list_valid} />
+        {this.Bouton()}
+        {/*<DoneScreen key="doneScreen" list_valid={this.state.list_valid} />
+        <TodoScreen key="todoScreen" list={this.state.list} list_valid={this.state.list_valid} />*/}
       </View>
     );
   }
@@ -137,14 +158,12 @@ export default class All extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#efefef",
     width: "100%",
     height: "100%",
     marginTop: "10%",
-    justifyContent: "center",
+    fontFamily: "Courier"
   },
   item: {
-    backgroundColor: "white",
     marginLeft: 15,
     marginRight: 15,
     marginBottom: 2,
@@ -154,26 +173,34 @@ const styles = StyleSheet.create({
   },
   button: {
     padding: 12,
-    justifyContent: "center",
+    flexDirection: "column",
     alignItems: "center",
-    backgroundColor: "#FF7C5F",
     marginBottom: 5,
     marginRight: 20,
     marginLeft: 20,
+    borderWidth: 1,
     borderRadius: 5,
+    borderColor: "purple",
   },
   input: {
     height: 30,
     marginHorizontal: 5,
     paddingHorizontal: 5,
     marginBottom: 5,
-    borderColor: "lightgrey",
   },
   fond: {
     marginLeft: 5,
     marginRight: 5,
     borderRadius: 5,
-    backgroundColor: "#DCDCDC",
     marginBottom: 10,
   },
+  desc: {
+    alignItems: "center",
+    marginBottom:10,
+    fontFamily: "Courier"
+  },
+  descText: {
+    fontSize: 10,
+    fontStyle: "italic"
+  }
 });

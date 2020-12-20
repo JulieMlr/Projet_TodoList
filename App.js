@@ -13,7 +13,7 @@ const SettingsStack = createStackNavigator();
 
 function AllScreen() {
   return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+    <View style={{ flex: 1}}>
       <All />
     </View>
   );
@@ -72,11 +72,11 @@ export default class App extends Component {
               let iconName;
 
               if (route.name === "All") {
-                iconName = focused ? "ios-mail-open" : "ios-mail";
+                iconName = focused ? "list" : "list";
               } else if (route.name == "Done") {
-                iconName = focused ? "ios-list-box" : "ios-list";
+                iconName = focused ? "checkbox" : "checkbox";
               } else {
-                iconName = focused ? "ios-moon" : "ios-moon";
+                iconName = focused ? "checkbox-outline" : "checkbox-outline";
               }
               return <Ionicons name={iconName} size={size} color={color} />;
             },
