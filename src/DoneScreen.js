@@ -24,7 +24,7 @@ function DoneScreen(props) {
     const  Done = () => {
     return (
       <View style={styles.fond}>
-        <Text> Terminé </Text>
+        <Text> Terminé </Text>      
         {list_valid.map((element, index) => {
           return ListValidItem(index, element);
         })}

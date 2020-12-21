@@ -14,6 +14,8 @@ import { FontAwesome } from "@expo/vector-icons";
 import DoneScreen from "./DoneScreen";
 import TodoScreen from "./TodoScreen";
 import { Ionicons } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { observable, computed } from "mobx";
 
 export default class All extends Component {
   constructor(props) {
@@ -27,9 +29,19 @@ export default class All extends Component {
     };
   }
 
+storeData = async () => {
+  await AsyncStorage.setItem("List", this.state.list);
+}
+
+getData = async () => {
+  const value = await AsyncStorage.getItem("List");
+  const value_bis = JSON.parse(value);
+  return value_bis;
+}
+
   ListItem = (index, text) => {
     return (
-      <View>
+      <View key={index}>
         <View style={styles.item}>
           <TouchableOpacity onPress={() => this.ValidItem(index, text)}>
             <Ionicons name="checkmark-circle-outline" size={18} />
@@ -49,7 +61,7 @@ export default class All extends Component {
 
   ListValidItem = (index, text) => {
     return (
-      <View style={styles.item}>
+      <View style={styles.item} key={index}>
         <Ionicons name="checkmark-circle" size={18} color="grey" />
         <Text
           style={{
@@ -145,11 +157,13 @@ export default class All extends Component {
   render() {
     return (
       <View style={styles.container}>
+        <ScrollView>
         <this.Todo key="todo" />
         <this.Done key="done" />
         {this.Bouton()}
         {/*<DoneScreen key="doneScreen" list_valid={this.state.list_valid} />
-        <TodoScreen key="todoScreen" list={this.state.list} list_valid={this.state.list_valid} />*/}
+        <TodoScreen key="todoScreen" list={this.state.list} />*/}
+        </ScrollView>
       </View>
     );
   }

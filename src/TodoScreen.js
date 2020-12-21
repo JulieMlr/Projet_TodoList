@@ -13,8 +13,6 @@ import {
 
 function TodoScreen(props) {
   const list = props.list;
-  const list_valid = props.list_valid;
-
 
   const ListItem = (index, text) => {
     return (

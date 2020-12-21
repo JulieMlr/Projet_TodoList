@@ -6,6 +6,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import { View, Text, StyleSheet, TextInput, Button } from "react-native";
 import All from "./src/All";
 import DoneScreenBis from "./src/DoneScreen";
+import TodoScreenBis from "./src/TodoScreen";
 
 const Tab = createBottomTabNavigator();
 const HomeStack = createStackNavigator();
@@ -14,7 +15,7 @@ const SettingsStack = createStackNavigator();
 function AllScreen() {
   return (
     <View style={{ flex: 1}}>
-      <All />
+      <All/>
     </View>
   );
 }
@@ -24,6 +25,7 @@ function DoneScreen() {
     <View
       style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
     >
+      {/*<DoneScreenBis key="doneScreen" list_valid={this.state.list_valid} />*/}
     </View>
   );
 }
@@ -32,7 +34,9 @@ function TodoScreen() {
   return (
     <View
       style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
-    ></View>
+    >
+      {/*<TodoScreenBis key="todoScreen" list={this.state.list} />*/}
+    </View>
   );
 }
 
