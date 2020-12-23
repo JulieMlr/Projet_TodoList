@@ -29,15 +29,36 @@ export default class All extends Component {
     };
   }
 
-storeData = async () => {
-  await AsyncStorage.setItem("List", this.state.list);
-}
+  componentDidMount() {
+    this.getData("List").then((res_list) => {
+      this.setState({ list: res_list });
+    });
+    this.getData("ListDesc").then((res_desc) => {
+      this.setState({ listDescription: res_desc });
+    });
+    this.getData("ListValid").then((res_list_valid) => {
+      this.setState({ list_valid : res_list_valid})
+    });
+  }
 
-getData = async () => {
-  const value = await AsyncStorage.getItem("List");
-  const value_bis = JSON.parse(value);
-  return value_bis;
-}
+  storeData = async () => {
+    await AsyncStorage.setItem("List", JSON.stringify(this.state.list));
+    await AsyncStorage.setItem(
+      "ListDesc",
+      JSON.stringify(this.state.listDescription)
+    );
+    await AsyncStorage.setItem("ListValid", JSON.stringify(this.state.list_valid));
+  };
+
+  getData = async (key) => {
+    const value = await AsyncStorage.getItem(key);
+    if (!value) {
+      return [];
+    }
+    const value_bis = JSON.parse(value);
+    return value_bis;
+  };
+
 
   ListItem = (index, text) => {
     return (
@@ -52,12 +73,14 @@ getData = async () => {
           </TouchableOpacity>
         </View>
         <View style={styles.desc}>
-          <Text style={styles.descText}> {this.state.listDescription[index]}</Text>
+          <Text style={styles.descText}>
+            {" "}
+            {this.state.listDescription[index]}
+          </Text>
         </View>
       </View>
     );
   };
-
 
   ListValidItem = (index, text) => {
     return (
@@ -84,13 +107,17 @@ getData = async () => {
     const tmp_des = [...this.state.listDescription];
     tmp.splice(index, 1);
     tmp_des.splice(index, 1);
-    this.setState({ list: tmp, listDescription: tmp_des });
+    this.setState({ list: tmp, listDescription: tmp_des }, () => {
+      this.storeData();
+    });
   };
 
   deleteValidItem = (index) => {
     const tmp = [...this.state.list_valid];
     tmp.splice(index, 1);
-    this.setState({ list_valid: tmp });
+    this.setState({ list_valid: tmp }, () => {
+      this.storeData();
+    });
   };
 
   addItem = () => {
@@ -98,7 +125,9 @@ getData = async () => {
     const tmp_des = [...this.state.listDescription];
     tmp.push(this.state.text);
     tmp_des.push(this.state.description);
-    this.setState({ list: tmp, text: "", listDescription: tmp_des });
+    this.setState({ list: tmp, text: "", listDescription: tmp_des }, () => {
+      this.storeData();
+    });
   };
 
   ValidItem = (index, text) => {
@@ -121,7 +150,7 @@ getData = async () => {
   Todo = () => {
     return (
       <View style={styles.fond}>
-        {this.state.list.map((element, index) => {
+        {this.state.list?.map((element, index) => {
           return this.ListItem(index, element);
         })}
       </View>
@@ -158,10 +187,10 @@ getData = async () => {
     return (
       <View style={styles.container}>
         <ScrollView>
-        <this.Todo key="todo" />
-        <this.Done key="done" />
-        {this.Bouton()}
-        {/*<DoneScreen key="doneScreen" list_valid={this.state.list_valid} />
+          <this.Todo key="todo" />
+          <this.Done key="done" />
+          {this.Bouton()}
+          {/*<DoneScreen key="doneScreen" list_valid={this.state.list_valid} />
         <TodoScreen key="todoScreen" list={this.state.list} />*/}
         </ScrollView>
       </View>
@@ -175,7 +204,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     marginTop: "10%",
-    fontFamily: "Courier"
+    fontFamily: "Courier",
   },
   item: {
     marginLeft: 15,
@@ -210,11 +239,11 @@ const styles = StyleSheet.create({
   },
   desc: {
     alignItems: "center",
-    marginBottom:10,
-    fontFamily: "Courier"
+    marginBottom: 10,
+    fontFamily: "Courier",
   },
   descText: {
     fontSize: 10,
-    fontStyle: "italic"
-  }
+    fontStyle: "italic",
+  },
 });
