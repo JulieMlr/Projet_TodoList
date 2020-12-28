@@ -6,41 +6,57 @@
 - npm add expo
 - expo start
 
+
 # Fichier App
 Crée la navigation de l'application
 - AllScreen : Fait appel au fichier All pour afficher toutes les listes
-- DoneScreen : Fait appel au fichier DoneScreen pour afficher la liste des tâches en terminés (je n'ai pas réussi à récupérer les éléments du state donc c'est en commentaire)
-- TodoScreen : Fait appel au fichier TodoScreen pour afficher la liste des tâches en cours (comme pour DoneScreen je n'ai pas réussi a récupérer les éléments du state pour les afficher)
+
+- import DoneScreen & TodoScreen :
+    - DoneScreen : Permet l'affichage des tâches qui sont terminées 
+    - TodoScreen : Permet l'affichage des tâches qui sont en cours
+
 
 # Fichier All
 Ce fichier est la page All de mon application, elle permet l'affichage de toutes les listes (terminés ou non)
 
 ## Explication
 Création de mon state avec tout les éléments dont j'ai besoin pour l'application
-- storeData & getData : permet le stockage dans AsyncStorage (je n'ai pas réussi à l'utiliser dans mon application, donc ça ne fonctionne pas)
-- ListItem : permet l'affichage des listes qui sont en cours
-- ListValidItem : permet l'affichage des listes qui sont terminés
-- deleteItem : permet la suppression d'une tâche qui est en cours
-- deleteValidItem : permet la suppression d'une tâche qui est terminée
-- addItem : permet l'ajoute de la tâche et de sa description
-- ValidItem : permet de mettre à Done une tâche
-- Done : permet le parcours de la liste des tâches terminés
-- Todo : permet le parcours de la liste des tâches en cours
-- Bouton : permet l'affichage des zones de texte et du bouton
+- componentDidMount : permet de récupérer les listes stockés dans le AsyncStorage au début de l'application
+- addItem : permet l'ajout de la tâche et de sa description
+- Done : permet le parcours de la liste des tâches terminés et fait appel à ListValidItem pour l'affichage
+- Todo : permet le parcours de la liste des tâches en cours et fait appel à ListItem pour l'affichage
+- Bouton : permet l'affichage des zones de texte et du bouton et fait appel à addItem pour l'ajout
+
 
 # Fichier DoneScreen
-Ce fichier est la page Done de mon application, elle permet l'affichage des listes qui sont terminés
+Ce fichier est la page Done de mon application, elle permet l'affichage des tâches terminées
 
 ## Explication
-Récupère la liste des tâches terminés du state
-- ListValidItem : permet l'affichage des listes qui sont terminés
-- Done : permet le parcours de la liste des tâches terminés
+Récupère la liste des tâches terminés grâce au getData
+- Parcours la liste des tâches terminés et fait appel à DoneListValiditem pour l'affichage de la liste
+
 
 # Fichier TodoScreen
-Ce fichier est la page Todo de mon application, elle permet l'affichage des listes qui sont en cours
+Ce fichier est la page Todo de mon application, elle permet l'affichage des tâches qui sont en cours
 
 ## Explication
-Récupère la liste des tâches en cours du state
-- ListItem : permet l'affichage des listes qui sont en cours
-- Todo : permet le parcours de la liste des tâches en cours
+Récupère les listes des tâches en cours et terminées grâce au getData
+- Parcours la liste des tâches en cours et fait appel à TodoListItem pour l'affichage de la liste
+
+
+# ListItem
+Ce fichier contient les fonctions qui permettent l'affichage des listes dans mon application
+
+## Explication
+- DoneListValiditem : Permet l'affichage des tâches qui sont terminés dans la page Done de mon application
+- TodoListItem : Permet l'affichage des tâches qui sont en cours dans la page Todo de mon application
+- ListItem : Permet la suppression d'une tâche en cours, permet de valider une tâche et permet l'affichage des tâches en cours dans la page All de mon application
+- ListValidItem : Permet la suppression d'une tâche terminée et permet l'affichage des tâches terminées dans la page All de mon application
+
+# Storage
+Ce fichier contient les fonctions qui gère le AsyncStorage
+
+## Explication
+- storeData : Permet de sauvegarder une tâches dans le AsyncStorage (elle est appellé lors de l'ajout d'une tâche)
+- getData : Permet de récupérer les tâches qui ont été sauvegardés
 
