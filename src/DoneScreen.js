@@ -1,15 +1,9 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Alert,
-  Button
-} from "react-native";
-import { useFocusEffect} from "@react-navigation/native";
+import { View, Text, StyleSheet, Alert, Button } from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
 import { getData, storeData } from "./Storage";
-import { ListValidItem } from "./ListItem";
+import { DoneListValiditem, ListValidItem} from "./ListItem";
 
 function DoneScreen() {
   const [list_valid, setList] = useState([]);
@@ -20,15 +14,11 @@ function DoneScreen() {
     });
   });
 
-  useEffect(() => {
-    storeData("ListValid", JSON.stringify(list_valid));
-  }, []);
-
   return (
     <View style={styles.fond}>
-        {list_valid.map((element, index) => {
-          return (
-            <ListValidItem
+      {list_valid.map((element, index) => {
+        return (
+          /*<ListValidItem
               key={index}
               element={element}
               list_valid={list_valid}
@@ -37,10 +27,11 @@ function DoneScreen() {
                   storeData("ListValid", JSON.stringify(list_valid));
                 });
               }}
-            />
-          );
-        })}
-      </View>
+            />*/
+          <DoneListValiditem key={index} element={element} />
+        );
+      })}
+    </View>
   );
 }
 

@@ -1,8 +1,9 @@
 # Projet_TodoList
 
 # Lancement du projet 
-- git clone https://github.com/JulieMlr/Projet_TodoList.git
+- git clone git@github.com:JulieMlr/Projet_TodoList.git --branch master --single-branch
 - cd Projet_TodoList
+- npm add expo
 - expo start
 
 # Fichier App

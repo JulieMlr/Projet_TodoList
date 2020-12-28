@@ -5,6 +5,8 @@ import {
   TextInput,
   StyleSheet,
   ScrollView,
+  Button,
+  Text,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { ListItem, ListValidItem } from "./ListItem";
@@ -29,7 +31,6 @@ export default class All extends Component {
       this.setState({ list_valid: res_list_valid });
     });
   }
-  
 
   addItem = () => {
     const tmp = [...this.state.list];
@@ -38,7 +39,6 @@ export default class All extends Component {
       storeData("List", JSON.stringify(this.state.list));
     });
   };
-
 
   Done = () => {
     return (
@@ -69,8 +69,8 @@ export default class All extends Component {
             <ListItem
               key={index}
               element={element}
-              list ={this.state.list}
-              list_valid = {this.state.list_valid}
+              list={this.state.list}
+              list_valid={this.state.list_valid}
               setValidItem={(value) => {
                 this.setState({ list_valid: value }, () => {
                   storeData("ListValid", JSON.stringify(this.state.list_valid));
@@ -90,6 +90,7 @@ export default class All extends Component {
 
   Bouton = () => {
     return (
+      <View>
       <View style={styles.button}>
         <TextInput
           placeholder="Ajouter une tâche"
@@ -110,6 +111,8 @@ export default class All extends Component {
         <TouchableOpacity onPress={this.addItem}>
           <Ionicons key="icon" name="add" size={30} color="purple" />
         </TouchableOpacity>
+       
+      </View>
       </View>
     );
   };

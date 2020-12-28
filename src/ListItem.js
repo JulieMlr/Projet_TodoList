@@ -3,9 +3,51 @@ import { View, Text, TouchableOpacity, StyleSheet, Alert } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 
-const ListItem = ({ element, list, list_valid, setList, setValidItem}) => {
+const DoneListValiditem = ({ element }) => {
+  return (
+    <View>
+      <View style={styles.item}>
+        <Ionicons name="checkmark-circle" size={18} />
+        <Text
+          style={{
+            fontSize: 18,
+            textDecorationLine: "line-through",
+            color: "grey",
+          }}
+        >
+          {element.text}
+        </Text>
+        <Text
+          style={
+            (styles.descText,
+            { textDecorationLine: "line-through", color: "grey" })
+          }
+        >
+          {element.description}
+        </Text>
+      </View>
+    </View>
+  );
+};
+
+const TodoListItem = ({ element }) => {
+  return (
+    <View>
+      <View style={styles.item}>
+      
+          <Ionicons name="checkmark-circle-outline" size={18} />
+      
+        <Text style={{ fontSize: 18 }}>{element.text}</Text>
+        <Text style={styles.descText}>{element.description}</Text>
+      </View>
+
+    </View>
+  );
+};
+
+const ListItem = ({ element, list, list_valid, setList, setValidItem }) => {
   const deleteItem = () => {
-      const index = list.findIndex((e) => e === element);
+    const index = list.findIndex((e) => e === element);
     const tmp = [...list];
     tmp.splice(index, 1);
     setList(tmp);
@@ -81,6 +123,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
   },
+  item_bis: {
+    marginLeft: 15,
+    marginRight: 15,
+    marginBottom: 2,
+    flexDirection: "row",
+  },
   desc: {
     alignItems: "center",
     marginBottom: 10,
@@ -92,4 +140,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export { ListItem, ListValidItem };
+export { ListItem, ListValidItem, DoneListValiditem, TodoListItem };

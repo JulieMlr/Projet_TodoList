@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { getData } from "./Storage";
-import { ListItem } from "./ListItem";
+import { TodoListItem, ListItem } from "./ListItem";
 import { useFocusEffect } from "@react-navigation/native";
 
 function TodoScreen() {
@@ -22,7 +22,7 @@ function TodoScreen() {
     <View style={styles.fond}>
       {list.map((element, index) => {
         return (
-          <ListItem
+          /* <ListItem
             key={index}
             element={element}
             list={list}
@@ -37,7 +37,8 @@ function TodoScreen() {
                 storeData("List", JSON.stringify(list));
               });
             }}
-          />
+          />*/
+          <TodoListItem key={index} element={element} />
         );
       })}
     </View>
