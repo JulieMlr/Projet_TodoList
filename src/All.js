@@ -5,8 +5,6 @@ import {
   TextInput,
   StyleSheet,
   ScrollView,
-  Button,
-  Text,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { ListItem, ListValidItem } from "./ListItem";
@@ -35,9 +33,11 @@ export default class All extends Component {
   addItem = () => {
     const tmp = [...this.state.list];
     tmp.push({ text: this.state.text, description: this.state.description });
-    this.setState({ list: tmp, text: "" }, () => {
+    this.setState({ list: tmp, text: "", description: "" }, () => {
       storeData("List", JSON.stringify(this.state.list));
     });
+    this.textInput.clear();
+    this.textInput_bis.clear();
   };
 
   Done = () => {
@@ -49,10 +49,16 @@ export default class All extends Component {
               key={index}
               element={element}
               list_valid={this.state.list_valid}
+              list={this.state.list}
               setListValid={(value) => {
                 this.setState({ list_valid: value }, () => {
                   storeData("ListValid", JSON.stringify(this.state.list_valid));
                 });
+              }}
+              setNoListValid={(value) => {
+                this.setState({list: value}, () => {
+                  storeData("List", JSON.stringify(this.state.list));
+                })
               }}
             />
           );
@@ -91,28 +97,29 @@ export default class All extends Component {
   Bouton = () => {
     return (
       <View>
-      <View style={styles.button}>
-        <TextInput
-          placeholder="Ajouter une tâche"
-          style={styles.input}
-          value={this.text}
-          onChangeText={(value) => {
-            this.setState({ text: value });
-          }}
-        />
-        <TextInput
-          placeholder="Ajouter une description"
-          style={styles.input}
-          value={this.description}
-          onChangeText={(value) => {
-            this.setState({ description: value });
-          }}
-        />
-        <TouchableOpacity onPress={this.addItem}>
-          <Ionicons key="icon" name="add" size={30} color="purple" />
-        </TouchableOpacity>
-       
-      </View>
+        <View style={styles.button}>
+          <TextInput
+            placeholder="Ajouter une tâche"
+            style={styles.input}
+            value={this.text}
+            onChangeText={(value) => {
+              this.setState({ text: value});
+            }}
+            ref={input => {(this.textInput = input)}}
+          />
+          <TextInput
+            placeholder="Ajouter une description"
+            style={styles.input}
+            value={this.description}
+            onChangeText={(value) => {
+              this.setState({ description: value });
+            }}
+            ref={input_bis => {(this.textInput_bis = input_bis)}}
+          />
+          <TouchableOpacity onPress={this.addItem}>
+            <Ionicons key="icon" name="add" size={30} color="purple" />
+          </TouchableOpacity>
+        </View>
       </View>
     );
   };

@@ -13,4 +13,5 @@ const getData = async (key) => {
   return value_bis;
 };
 
+
 export {getData, storeData};

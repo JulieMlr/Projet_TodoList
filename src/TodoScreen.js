@@ -1,32 +1,33 @@
 import React from "react";
 import { useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, StyleSheet, Alert } from "react-native";
 import { getData } from "./Storage";
-import { TodoListItem, ListItem } from "./ListItem";
+import { ListItem } from "./ListItem";
 import { useFocusEffect } from "@react-navigation/native";
 
 function TodoScreen() {
   const [list, setListTodo] = useState([]);
-  const [list_valid, setListDone] = useState([]);
+  //const [list_valid, setListDone] = useState([]);
 
   useFocusEffect(() => {
     getData("List").then((res_list) => {
       setListTodo(res_list);
     });
-    getData("ListValid").then((res_list) => {
+    /*getData("ListValid").then((res_list) => {
       setListDone(res_list);
-    });
+    });*/
   });
 
   return (
     <View style={styles.fond}>
       {list.map((element, index) => {
         return (
-          /* <ListItem
+           <ListItem
             key={index}
             element={element}
             list={list}
-            list_valid={list_valid}
+            list_valid={[]}
+           /*list_valid={list_valid}
             setValidItem={(value) => {
               setListDone(value, () => {
                 storeData("ListValid", JSON.stringify(list_valid));
@@ -36,9 +37,10 @@ function TodoScreen() {
               setListTodo(value, () => {
                 storeData("List", JSON.stringify(list));
               });
-            }}
-          />*/
-          <TodoListItem key={index} element={element} />
+            }}*/
+            setValidItem={() => Alert.alert("Se diriger sur la page All pour valider une tâche") }
+            setList={() => Alert.alert("Se diriger sur la page All pour supprimer une tâche")}
+          />
         );
       })}
     </View>

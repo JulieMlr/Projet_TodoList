@@ -30,21 +30,23 @@ Création de mon state avec tout les éléments dont j'ai besoin pour l'applicat
 Ce fichier est la page Done de mon application, elle permet l'affichage des tâches terminées
 ### Explication
 Récupère la liste des tâches terminés grâce au getData
-- Parcours la liste des tâches terminés et fait appel à DoneListValiditem pour l'affichage de la liste
+- Parcours la liste des tâches terminés et fait appel à ListValidItem pour l'affichage de la liste
+### Explication des commentaires
+Je voulais permettre de supprimer et de rendre une tâche Todo sur la page Done, malheureusement je n'ai pas réussi a faire fonctionner ses fonctionnalités, donc je les ai mis en commentaires pour vous montrer ce que j'ai essayé de faire
 
 
 # Fichier TodoScreen
 Ce fichier est la page Todo de mon application, elle permet l'affichage des tâches qui sont en cours
 ### Explication
 Récupère les listes des tâches en cours et terminées grâce au getData
-- Parcours la liste des tâches en cours et fait appel à TodoListItem pour l'affichage de la liste
+- Parcours la liste des tâches en cours et fait appel à ListItem pour l'affichage de la liste
+### Explication des commentaires
+Je voulais permettre de supprimer et de rendre une tâche Done sur la page Todo, malheureusement je n'ai pas réussi a faire fonctionner ses fonctionnalités, donc je les ai mis en commentaires pour vous montrer ce que j'ai essayé de faire
 
 
 # ListItem
 Ce fichier contient les fonctions qui permettent l'affichage des listes dans mon application
 ### Explication
-- DoneListValiditem : Permet l'affichage des tâches qui sont terminés dans la page Done de mon application
-- TodoListItem : Permet l'affichage des tâches qui sont en cours dans la page Todo de mon application
 - ListItem : Permet la suppression d'une tâche en cours, permet de valider une tâche et permet l'affichage des tâches en cours dans la page All de mon application
 - ListValidItem : Permet la suppression d'une tâche terminée et permet l'affichage des tâches terminées dans la page All de mon application
 

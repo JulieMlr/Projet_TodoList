@@ -2,48 +2,7 @@ import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Alert } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
-
-const DoneListValiditem = ({ element }) => {
-  return (
-    <View>
-      <View style={styles.item}>
-        <Ionicons name="checkmark-circle" size={18} />
-        <Text
-          style={{
-            fontSize: 18,
-            textDecorationLine: "line-through",
-            color: "grey",
-          }}
-        >
-          {element.text}
-        </Text>
-        <Text
-          style={
-            (styles.descText,
-            { textDecorationLine: "line-through", color: "grey" })
-          }
-        >
-          {element.description}
-        </Text>
-      </View>
-    </View>
-  );
-};
-
-const TodoListItem = ({ element }) => {
-  return (
-    <View>
-      <View style={styles.item}>
-      
-          <Ionicons name="checkmark-circle-outline" size={18} />
-      
-        <Text style={{ fontSize: 18 }}>{element.text}</Text>
-        <Text style={styles.descText}>{element.description}</Text>
-      </View>
-
-    </View>
-  );
-};
+ 
 
 const ListItem = ({ element, list, list_valid, setList, setValidItem }) => {
   const deleteItem = () => {
@@ -64,7 +23,7 @@ const ListItem = ({ element, list, list_valid, setList, setValidItem }) => {
         <TouchableOpacity onPress={() => ValidItem()}>
           <Ionicons name="checkmark-circle-outline" size={18} />
         </TouchableOpacity>
-        <Text style={{ fontSize: 18 }}>{element.text}</Text>
+        <Text style={styles.text}>{element.text}</Text>
         <TouchableOpacity onPress={() => deleteItem()}>
           <FontAwesome name="trash" size={18} />
         </TouchableOpacity>
@@ -76,39 +35,32 @@ const ListItem = ({ element, list, list_valid, setList, setValidItem }) => {
   );
 };
 
-const ListValidItem = ({ element, list_valid, setListValid }) => {
+const ListValidItem = ({ element, list_valid, list, setListValid, setNoListValid }) => {
   const deleteValidItem = () => {
     const index = list_valid.findIndex((e) => e === element);
     const tmp = [...list_valid];
     tmp.splice(index, 1);
     setListValid(tmp);
   };
+  const NoValidItem = () => {
+    const index = list_valid.findIndex((e) => e === element);
+    const tmp = [...list, list_valid[index]];
+    setNoListValid(tmp);
+    deleteValidItem(index);
+  };
   return (
     <View>
       <View style={styles.item}>
-        <Ionicons name="checkmark-circle" size={18} />
-        <Text
-          style={{
-            fontSize: 18,
-            textDecorationLine: "line-through",
-            color: "grey",
-          }}
-        >
-          {element.text}
-        </Text>
+        <TouchableOpacity onPress={() => NoValidItem()}>
+          <Ionicons name="checkmark-circle" size={18} />
+        </TouchableOpacity>
+        <Text style={styles.textValid}>{element.text}</Text>
         <TouchableOpacity onPress={() => deleteValidItem()}>
           <FontAwesome name="trash" size={18} />
         </TouchableOpacity>
       </View>
       <View style={styles.desc}>
-        <Text
-          style={
-            (styles.descText,
-            { textDecorationLine: "line-through", color: "grey" })
-          }
-        >
-          {element.description}
-        </Text>
+        <Text style={styles.descTextValid}>{element.description}</Text>
       </View>
     </View>
   );
@@ -129,6 +81,16 @@ const styles = StyleSheet.create({
     marginBottom: 2,
     flexDirection: "row",
   },
+  text: {
+    fontSize: 18,
+    fontFamily: "sans-serif-light",
+  },
+  textValid: {
+    fontSize: 18,
+    textDecorationLine: "line-through",
+    color: "grey",
+    fontFamily: "sans-serif-light",
+  },
   desc: {
     alignItems: "center",
     marginBottom: 10,
@@ -137,7 +99,15 @@ const styles = StyleSheet.create({
   descText: {
     fontSize: 10,
     fontStyle: "italic",
+    fontFamily: "sans-serif-light",
+  },
+  descTextValid: {
+    fontSize: 10,
+    fontStyle: "italic",
+    textDecorationLine: "line-through",
+    color: "grey",
+    fontFamily: "sans-serif-light",
   },
 });
 
-export { ListItem, ListValidItem, DoneListValiditem, TodoListItem };
+export { ListItem, ListValidItem };
