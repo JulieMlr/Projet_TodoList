@@ -6,6 +6,16 @@
 - npm add expo
 - expo start
 
+# Explication du projet
+- Page All : 
+    - Nous pouvons écrire une tâche et une description dans l'encadré, et appuyer sur + pour l'ajouter 
+    - Le cercle blanc nous indique que la tâche est en cours, si on clique dessus la tâche passe à Done
+    - Le cercle noir nous indique que la tâche est terminée, si on clique dessus la tâche passe à Todo
+    - La poubelle permet de supprimer une tâche
+- Page Done :
+    - La poubelle et le cercle noir fait juste un Alert, nous indiquant qu'il faut aller sur la page All pour supprimer ou rendre Todo une tâche
+- Page Todo :
+    - La poubelle et le cercle blanc fait juste un Alert, nous indiquant qu'il faut aller sur la page All pour supprimer ou rendre Done une tâche
 
 # Fichier App
 Crée la navigation de l'application
@@ -47,8 +57,8 @@ Je voulais permettre de supprimer et de rendre une tâche Done sur la page Todo,
 # ListItem
 Ce fichier contient les fonctions qui permettent l'affichage des listes dans mon application
 ### Explication
-- ListItem : Permet la suppression d'une tâche en cours, permet de valider une tâche et permet l'affichage des tâches en cours dans la page All de mon application
-- ListValidItem : Permet la suppression d'une tâche terminée et permet l'affichage des tâches terminées dans la page All de mon application
+- ListItem : Permet la suppression d'une tâche en cours, permet de valider une tâche et permet l'affichage des tâches en cours dans la page All et Todo de mon application
+- ListValidItem : Permet la suppression d'une tâche terminée et permet l'affichage des tâches terminées dans la page All  et Done de mon application
 
 # Storage
 Ce fichier contient les fonctions qui gère le AsyncStorage
